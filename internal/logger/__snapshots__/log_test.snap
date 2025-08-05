@@ -1,0 +1,10 @@
+
+[Test_logger_New/should_log_out_pretty_logs_pretty_=_true - 1]
+[90m2025-03-27T05:00:00-07:00[0m [32mINF[0m [1mI'm supposed to be pretty[0m
+
+---
+
+[Test_logger_New/should_print_out_JSON_logs_pretty_=_false - 1]
+{"level":"info","time":"2025-03-27T12:00:00Z","message":"I'm supposed to be JSON"}
+
+---

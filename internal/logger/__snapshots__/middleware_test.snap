@@ -1,0 +1,14 @@
+
+[Test_middleware_NewMiddleware/should_add_logs_add_the_beginning_and_end_of_the_request_lifetime - 1]
+{"level":"info","method":"GET","path":"/","requestID":"6460a629-fab4-4eaf-8de1-bfb4f39ddbbc","client_ip":"192.0.2.1","user_agent":"TestAgent/1.0","request_headers":{"User-Agent":["TestAgent/1.0"]},"request_body":"Hey","time":"2025-03-27T12:00:00Z","message":"Processing request"}
+{"level":"info","method":"GET","path":"/","requestID":"6460a629-fab4-4eaf-8de1-bfb4f39ddbbc","client_ip":"192.0.2.1","user_agent":"TestAgent/1.0","status":200,"response_headers":{"Content-Type":["application/json; charset=utf-8"]},"duration_ms":0,"response_body":{"status":"OK"},"time":"2025-03-27T12:00:00Z","message":"Response sent"}
+
+---
+
+[Test_middleware_NewMiddleware/should_omit_the_request_and_response_body_when_not_provided - 1]
+{"level":"info","method":"GET","path":"/","requestID":"6460a629-fab4-4eaf-8de1-bfb4f39ddbbc","client_ip":"192.0.2.1","user_agent":"TestAgent/1.0","request_headers":{"User-Agent":["TestAgent/1.0"]},"request_body":"Hey","time":"2025-03-27T12:00:00Z","message":"Processing request"}
+{"level":"info","method":"GET","path":"/","requestID":"6460a629-fab4-4eaf-8de1-bfb4f39ddbbc","client_ip":"192.0.2.1","user_agent":"TestAgent/1.0","status":200,"response_headers":{"Content-Type":["application/json; charset=utf-8"]},"duration_ms":0,"response_body":{"status":"OK"},"time":"2025-03-27T12:00:00Z","message":"Response sent"}
+{"level":"info","method":"DELETE","path":"/","requestID":"6460a629-fab4-4eaf-8de1-bfb4f39ddbbc","client_ip":"192.0.2.1","user_agent":"TestAgent/1.0","request_headers":{"User-Agent":["TestAgent/1.0"]},"request_body":null,"time":"2025-03-27T12:00:00Z","message":"Processing request"}
+{"level":"info","method":"DELETE","path":"/","requestID":"6460a629-fab4-4eaf-8de1-bfb4f39ddbbc","client_ip":"192.0.2.1","user_agent":"TestAgent/1.0","status":204,"response_headers":{},"duration_ms":0,"response_body":null,"time":"2025-03-27T12:00:00Z","message":"Response sent"}
+
+---
