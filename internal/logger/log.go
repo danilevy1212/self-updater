@@ -1,10 +1,10 @@
 package logger
 
 import (
+	"github.com/rs/zerolog"
 	"io"
 	"os"
 	"time"
-	"github.com/rs/zerolog"
 )
 
 func New(

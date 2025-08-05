@@ -21,6 +21,10 @@
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             go
+            # NOTE  Out of scope for this, but definitely a must in production
+            # golangci-lint
+            openssl
+            gnumake
           ];
         };
       };

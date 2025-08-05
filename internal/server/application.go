@@ -3,8 +3,8 @@ package server
 import (
 	"context"
 	"fmt"
-	"github.com/danilevy1212/self-updater/internal/server/config"
 	"github.com/danilevy1212/self-updater/internal/models"
+	"github.com/danilevy1212/self-updater/internal/server/config"
 	"github.com/gin-gonic/gin"
 )
 

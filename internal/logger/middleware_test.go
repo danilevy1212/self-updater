@@ -3,14 +3,14 @@ package logger
 import (
 	"bytes"
 	"context"
-	"net/http"
-	"net/http/httptest"
-	"strings"
-	"testing"
 	"github.com/gin-gonic/gin"
 	"github.com/gkampitakis/go-snaps/snaps"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
+	"net/http"
+	"net/http/httptest"
+	"strings"
+	"testing"
 )
 
 func Test_middleware_NewMiddleware(t *testing.T) {

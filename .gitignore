@@ -8,6 +8,7 @@
 *.so
 *.dylib
 bin/*
+internal/assets/private.pem
 
 # Test binary, built with `go test -c`
 *.test

@@ -1,10 +1,10 @@
 package logger
 
 import (
+	"github.com/gkampitakis/go-snaps/snaps"
 	"io"
 	"os"
 	"testing"
-	"github.com/gkampitakis/go-snaps/snaps"
 )
 
 func Test_logger_New(t *testing.T) {

@@ -5,5 +5,6 @@ func (u *Updater) Run() {
 		Str("version", u.Meta.Version).
 		Str("commit", u.Meta.Commit).
 		Str("digest", u.Meta.Digest).
+		Str("public_key", string(u.Meta.IntegrityAuthorityPublicKey)).
 		Msg("Running updater job")
 }

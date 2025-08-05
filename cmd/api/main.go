@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/danilevy1212/self-updater/internal/assets"
 	"github.com/danilevy1212/self-updater/internal/digest"
 	"github.com/danilevy1212/self-updater/internal/models"
 	"github.com/danilevy1212/self-updater/internal/server"
@@ -37,9 +38,10 @@ func main() {
 
 	ctx := context.Background()
 	am := models.ApplicationMeta{
-		Digest:  d,
-		Version: Version,
-		Commit:  Commit,
+		Digest:                      d,
+		Version:                     Version,
+		Commit:                      Commit,
+		IntegrityAuthorityPublicKey: assets.PublicKeyPEM,
 	}
 
 	updater, err := updater.New(ctx, am)

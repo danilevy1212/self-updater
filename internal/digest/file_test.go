@@ -3,9 +3,9 @@ package digest
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
-	"github.com/stretchr/testify/assert"
 )
 
 func Test_defaultFileDigester(t *testing.T) {
@@ -25,4 +25,3 @@ func Test_defaultFileDigester(t *testing.T) {
 	assert.NoError(t, err, "error during file digestion")
 	assert.Equal(t, expectedHex, d, "hex sha256 values don't match")
 }
-
