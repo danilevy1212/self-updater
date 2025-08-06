@@ -35,22 +35,25 @@ test:
 
 release: build-api
 	@[ -n "$$$(SIGNING_KEY_ENV)" ] || (echo "FATAL: Environment variable $${SIGNING_KEY_ENV} is not set. Cannot sign release artifacts and manifest."; exit 1)
+
 	@echo "Generating release manifest..."
 	@DIGEST=$(call sha256sum,$(BIN_DIR)/$(APP_NAME)); \
 	SIGN_KEY_FILE=$$(mktemp); \
 	echo "$$$(SIGNING_KEY_ENV)" > $$SIGN_KEY_FILE; \
-	ARTIFACT_SIG=$$($(SIGN_CMD) $$SIGN_KEY_FILE $(BIN_DIR)/$(APP_NAME)); \
-	echo "{\
-\"version\": \"$(VERSION)\",\
-\"commit\": \"$(COMMIT)\",\
-\"digest\": \"$$DIGEST\",\
-\"signatureBase64\": \"$$ARTIFACT_SIG\", \
-\"publicKey\": \"$(PUBLIC_KEY)\"\
-}" | jq '.' > $(MANIFEST); \
-	echo "Release manifest written to $(MANIFEST)"; \
+	SIG=$$($(SIGN_CMD) $$SIGN_KEY_FILE $(BIN_DIR)/$(APP_NAME)); \
+	UPDATED=$$(mktemp); \
+	jq \
+		--arg version "$(VERSION)" \
+		--arg commit "$(COMMIT)" \
+		--arg filename "$(APP_NAME)-linux-amd64" \
+		--arg digest "$$DIGEST" \
+		--arg sig "$$SIG" \
+		--arg pubkey "$$(printf %s "$(PUBLIC_KEY)")" \
+		-f scripts/merge_manifest.jq $(MANIFEST) > $$UPDATED; \
+	mv $$UPDATED $(MANIFEST); \
 	$(SIGN_CMD) $$SIGN_KEY_FILE $(MANIFEST) > $(MANIFEST).sig.base64; \
 	rm -f $$SIGN_KEY_FILE; \
-	echo "Manifest signature written to $(MANIFEST).sig.base64"
+	echo "Manifest and signature updated: $(MANIFEST)"
 
 clean:
 	rm -rf $(BIN_DIR)/$(APP_NAME)
