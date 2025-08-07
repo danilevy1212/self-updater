@@ -2,18 +2,17 @@ package digest
 
 import (
 	"crypto/sha256"
-	"encoding/hex"
 	"fmt"
 	"io"
 	"os"
 )
 
-type fileDigester func(path string) (string, error)
+type fileDigester func(path string) ([]byte, error)
 
-func defaultFileDigester(path string) (string, error) {
+func defaultFileDigester(path string) ([]byte, error) {
 	file, err := os.Open(path)
 	if err != nil {
-		return "", fmt.Errorf("could not open file in path `%s`: %w", path, err)
+		return nil, fmt.Errorf("could not open file in path `%s`: %w", path, err)
 	}
 	defer file.Close()
 
@@ -23,7 +22,7 @@ func defaultFileDigester(path string) (string, error) {
 	for {
 		n, err := file.Read(buf)
 		if err != nil && err != io.EOF {
-			return "", fmt.Errorf("cannot read file `%s`: %w", path, err)
+			return nil, fmt.Errorf("cannot read file `%s`: %w", path, err)
 		}
 		if n == 0 {
 			break
@@ -31,8 +30,7 @@ func defaultFileDigester(path string) (string, error) {
 		hasher.Write(buf[:n])
 	}
 
-	digest := hasher.Sum([]byte{})
-	return hex.EncodeToString(digest), nil
+	return hasher.Sum([]byte{}), nil
 }
 
 var DigestFile fileDigester = defaultFileDigester

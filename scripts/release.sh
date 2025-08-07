@@ -9,17 +9,25 @@ SIGN_CMD="go run ./cmd/sign"
 VERSION="${VERSION:-unknown}"
 COMMIT="${COMMIT:-unknown}"
 SIGNING_KEY_ENV="${SIGNING_KEY_ENV:-SIGNING_KEY_PEM}"
-PUBLIC_KEY="${PUBLIC_KEY:-}"
+PUBLIC_KEY_ENV="${PUBLIC_KEY_ENV:-PUBLIC_KEY_PEM}"
 
 SIGN_KEY_FILE="$(mktemp)"
-trap 'rm -f "$SIGN_KEY_FILE"' EXIT
+PUB_KEY_FILE="$(mktemp)"
+trap 'rm -f "$SIGN_KEY_FILE" "$PUB_KEY_FILE"' EXIT
 
 if [[ -z "${!SIGNING_KEY_ENV:-}" ]]; then
   echo "FATAL: Env variable \$${SIGNING_KEY_ENV} is not set."
   exit 1
 fi
 
-echo "${!SIGNING_KEY_ENV}" > "$SIGN_KEY_FILE"
+if [[ -z "${!PUBLIC_KEY_ENV:-}" ]]; then
+  echo "FATAL: Env variable \$${PUBLIC_KEY_ENV} is not set."
+  exit 1
+fi
+
+# Write keys to temp files (preserve newlines)
+printf "%b\n" "${!SIGNING_KEY_ENV}" > "$SIGN_KEY_FILE"
+printf "%b\n" "${!PUBLIC_KEY_ENV}" > "$PUB_KEY_FILE"
 
 targets=(
   "linux-amd64"
@@ -46,7 +54,7 @@ TMP_MANIFEST=$(mktemp)
 jq_args=(
   --arg version "$VERSION"
   --arg commit "$COMMIT"
-  --arg pubkey "$PUBLIC_KEY"
+  --arg pubkey "$(cat "$PUB_KEY_FILE")"
 )
 
 for target in "${!DIGESTS[@]}"; do

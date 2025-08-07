@@ -2,7 +2,6 @@ package digest
 
 import (
 	"crypto/sha256"
-	"encoding/hex"
 	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
@@ -11,7 +10,6 @@ import (
 func Test_defaultFileDigester(t *testing.T) {
 	content := []byte("hello, world!")
 	expected := sha256.Sum256(content)
-	expectedHex := hex.EncodeToString(expected[:])
 
 	tmpFile, err := os.CreateTemp("", "digest-test-*")
 	assert.NoError(t, err, "error creating temporary file")
@@ -23,5 +21,5 @@ func Test_defaultFileDigester(t *testing.T) {
 
 	d, err := defaultFileDigester(tmpFile.Name())
 	assert.NoError(t, err, "error during file digestion")
-	assert.Equal(t, expectedHex, d, "hex sha256 values don't match")
+	assert.Equal(t, expected[:], d, "hex sha256 values don't match")
 }

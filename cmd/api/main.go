@@ -32,15 +32,15 @@ func main() {
 		fmt.Println("Error creating file digest:", err)
 		return
 	}
-
-	fmt.Printf("Current executable sha256: %s\n", d)
-
-	ctx := context.Background()
 	am := models.NewApplicationMeta(
 		d,
 		Version,
 		Commit,
 	)
+	ctx := context.Background()
+
+	fmt.Printf("Current executable sha256: %s\n", am.DigestString())
+
 	updater, err := updater.New(ctx, am)
 	if err != nil {
 		fmt.Println("Error creating updater:", err)

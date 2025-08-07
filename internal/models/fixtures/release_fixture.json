@@ -1,6 +1,6 @@
 {
   "latest": "v1.2.3",
-  "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAo9D9XHQ1KqUljKZgYFb+9iE9/kvUeEvF4V9TCch4Nv8=\n-----END PUBLIC KEY-----",
+  "publicKey": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAxlus3crTiZAJKCkTSWJ6/9+VxA+jYvNHgJW0FBq4Gic=\n-----END PUBLIC KEY-----",
   "versions": [
     {
       "version": "v1.2.3",

@@ -1,13 +1,14 @@
 package models
 
 import (
+	"encoding/hex"
 	"runtime"
 
 	"github.com/danilevy1212/self-updater/internal/assets"
 )
 
 type ApplicationMeta struct {
-	Digest                      string
+	Digest                      []byte
 	Version                     string
 	Commit                      string
 	IntegrityAuthorityPublicKey []byte
@@ -15,7 +16,7 @@ type ApplicationMeta struct {
 	Arch                        string
 }
 
-func NewApplicationMeta(digest, version, commit string) ApplicationMeta {
+func NewApplicationMeta(digest []byte, version, commit string) ApplicationMeta {
 	return ApplicationMeta{
 		Digest:                      digest,
 		Version:                     version,
@@ -24,4 +25,8 @@ func NewApplicationMeta(digest, version, commit string) ApplicationMeta {
 		OS:                          runtime.GOOS,   // "linux", "windows" or "darwin"
 		Arch:                        runtime.GOARCH, // "amd64" or "arm64"
 	}
+}
+
+func (am ApplicationMeta) DigestString() string {
+	return hex.EncodeToString(am.Digest)
 }

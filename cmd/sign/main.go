@@ -39,6 +39,6 @@ func main() {
 		panic(err)
 	}
 
-	sig := ed25519.Sign(privKey, []byte(payload))
+	sig := ed25519.Sign(privKey, payload)
 	fmt.Println(base64.StdEncoding.EncodeToString(sig))
 }

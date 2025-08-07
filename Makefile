@@ -4,8 +4,8 @@ SIGN_CMD := go run ./cmd/sign
 BIN_DIR := bin
 ASSET_DIR := internal/assets
 MANIFEST := $(ASSET_DIR)/release.json
-PUBLIC_KEY := $(shell sed ':a;N;$$!ba;s/\n/\\n/g' internal/assets/public.pem)
 SIGNING_KEY_ENV := SIGNING_KEY_PEM
+PUBLIC_KEY_ENV := PUBLIC_KEY_PEM
 
 VERSION := $(shell git describe --tags --always --dirty)
 COMMIT := $(shell git rev-parse HEAD)
@@ -38,7 +38,12 @@ test:
 			-X 'main.Commit=$(COMMIT)'"
 
 release: build-api
-	@sh -c 'VERSION="$(VERSION)" COMMIT="$(COMMIT)" PUBLIC_KEY="$(PUBLIC_KEY)" SIGNING_KEY_PEM="$${SIGNING_KEY_PEM}" ./scripts/release.sh'
+release: build-api
+	@sh -c 'VERSION="$(VERSION)" \
+		COMMIT="$(COMMIT)" \
+		PUBLIC_KEY_PEM="$$(cat internal/assets/public.pem)" \
+		SIGNING_KEY_PEM="$${SIGNING_KEY_PEM}" \
+		./scripts/release.sh'
 
 clean:
 	rm -rf \
