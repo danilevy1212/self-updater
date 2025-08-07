@@ -35,4 +35,4 @@ func defaultFileDigester(path string) (string, error) {
 	return hex.EncodeToString(digest), nil
 }
 
-var DefaultFileDigester fileDigester = defaultFileDigester
+var DigestFile fileDigester = defaultFileDigester

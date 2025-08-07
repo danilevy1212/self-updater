@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/danilevy1212/self-updater/internal/assets"
 	"github.com/danilevy1212/self-updater/internal/digest"
 	"github.com/danilevy1212/self-updater/internal/models"
 	"github.com/danilevy1212/self-updater/internal/server"
@@ -28,7 +27,7 @@ func main() {
 		return
 	}
 
-	d, err := digest.DefaultFileDigester(currentExecutablePath)
+	d, err := digest.DigestFile(currentExecutablePath)
 	if err != nil {
 		fmt.Println("Error creating file digest:", err)
 		return
@@ -37,13 +36,11 @@ func main() {
 	fmt.Printf("Current executable sha256: %s\n", d)
 
 	ctx := context.Background()
-	am := models.ApplicationMeta{
-		Digest:                      d,
-		Version:                     Version,
-		Commit:                      Commit,
-		IntegrityAuthorityPublicKey: assets.PublicKeyPEM,
-	}
-
+	am := models.NewApplicationMeta(
+		d,
+		Version,
+		Commit,
+	)
 	updater, err := updater.New(ctx, am)
 	if err != nil {
 		fmt.Println("Error creating updater:", err)

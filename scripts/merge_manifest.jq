@@ -9,43 +9,43 @@
         os: "linux",
         arch: "amd64",
         filename: "api-linux-amd64",
-        digest: $lin_amd_digest,
-        signatureBase64: $lin_amd_sig
+        digest: $linux_amd64_digest,
+        signatureBase64: $linux_amd64_sig
       },
       {
         os: "linux",
         arch: "arm64",
         filename: "api-linux-arm64",
-        digest: $lin_arm_digest,
-        signatureBase64: $lin_arm_sig
+        digest: $linux_arm64_digest,
+        signatureBase64: $linux_arm64_sig
       },
       {
         os: "windows",
         arch: "amd64",
         filename: "api-windows-amd64.exe",
-        digest: $win_amd_digest,
-        signatureBase64: $win_amd_sig
+        digest: $windows_amd64_exe_digest,
+        signatureBase64: $windows_amd64_exe_sig
       },
       {
         os: "windows",
         arch: "arm64",
         filename: "api-windows-arm64.exe",
-        digest: $win_arm_digest,
-        signatureBase64: $win_arm_sig
+        digest: $windows_arm64_exe_digest,
+        signatureBase64: $windows_arm64_exe_sig
       },
       {
         os: "darwin",
         arch: "amd64",
         filename: "api-darwin-amd64",
-        digest: $mac_amd_digest,
-        signatureBase64: $mac_amd_sig
+        digest: $darwin_amd64_digest,
+        signatureBase64: $darwin_amd64_sig
       },
       {
         os: "darwin",
         arch: "arm64",
         filename: "api-darwin-arm64",
-        digest: $mac_arm_digest,
-        signatureBase64: $mac_arm_sig
+        digest: $darwin_arm64_digest,
+        signatureBase64: $darwin_arm64_sig
       }
     ]
   }] + $old.versions)

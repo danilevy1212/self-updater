@@ -7,6 +7,8 @@ import (
 	"encoding/pem"
 	"fmt"
 	"os"
+
+	"github.com/danilevy1212/self-updater/internal/digest"
 )
 
 func main() {
@@ -32,11 +34,11 @@ func main() {
 	}
 	privKey := priv.(ed25519.PrivateKey)
 
-	payload, err := os.ReadFile(filePath)
+	payload, err := digest.DigestFile(filePath)
 	if err != nil {
 		panic(err)
 	}
 
-	sig := ed25519.Sign(privKey, payload)
+	sig := ed25519.Sign(privKey, []byte(payload))
 	fmt.Println(base64.StdEncoding.EncodeToString(sig))
 }
