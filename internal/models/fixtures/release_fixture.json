@@ -11,21 +11,24 @@
           "arch": "amd64",
           "filename": "api-linux-amd64",
           "digest": "aaaa...3333",
-          "signatureBase64": "SIGBASE64-lin-123"
+          "signatureBase64": "SIGBASE64-lin-123",
+          "url": "https://example.com/downloads/v1.2.3/api-linux-amd64"
         },
         {
           "os": "windows",
           "arch": "amd64",
           "filename": "api-windows-amd64.exe",
           "digest": "bbbb...3333",
-          "signatureBase64": "SIGBASE64-win-123"
+          "signatureBase64": "SIGBASE64-win-123",
+          "url": "https://example.com/downloads/v1.2.3/api-windows-amd64.exe"
         },
         {
           "os": "darwin",
           "arch": "amd64",
           "filename": "api-darwin-amd64",
           "digest": "cccc...3333",
-          "signatureBase64": "SIGBASE64-mac-123"
+          "signatureBase64": "SIGBASE64-mac-123",
+          "url": "https://example.com/downloads/v1.2.3/api-darwin-amd64"
         }
       ]
     },
@@ -38,21 +41,24 @@
           "arch": "amd64",
           "filename": "api-linux-amd64",
           "digest": "aaaa...2222",
-          "signatureBase64": "SIGBASE64-lin-122"
+          "signatureBase64": "SIGBASE64-lin-122",
+          "url": "https://example.com/downloads/v1.2.2/api-linux-amd64"
         },
         {
           "os": "windows",
           "arch": "amd64",
           "filename": "api-windows-amd64.exe",
           "digest": "bbbb...2222",
-          "signatureBase64": "SIGBASE64-win-122"
+          "signatureBase64": "SIGBASE64-win-122",
+          "url": "https://example.com/downloads/v1.2.2/api-windows-amd64.exe"
         },
         {
           "os": "darwin",
           "arch": "amd64",
           "filename": "api-darwin-amd64",
           "digest": "cccc...2222",
-          "signatureBase64": "SIGBASE64-mac-122"
+          "signatureBase64": "SIGBASE64-mac-122",
+          "url": "https://example.com/downloads/v1.2.2/api-darwin-amd64"
         }
       ]
     },
@@ -65,21 +71,24 @@
           "arch": "amd64",
           "filename": "api-linux-amd64",
           "digest": "aaaa...1111",
-          "signatureBase64": "SIGBASE64-lin-121"
+          "signatureBase64": "SIGBASE64-lin-121",
+          "url": "https://example.com/downloads/v1.2.1/api-linux-amd64"
         },
         {
           "os": "windows",
           "arch": "amd64",
           "filename": "api-windows-amd64.exe",
           "digest": "bbbb...1111",
-          "signatureBase64": "SIGBASE64-win-121"
+          "signatureBase64": "SIGBASE64-win-121",
+          "url": "https://example.com/downloads/v1.2.1/api-windows-amd64.exe"
         },
         {
           "os": "darwin",
           "arch": "amd64",
           "filename": "api-darwin-amd64",
           "digest": "cccc...1111",
-          "signatureBase64": "SIGBASE64-mac-121"
+          "signatureBase64": "SIGBASE64-mac-121",
+          "url": "https://example.com/downloads/v1.2.1/api-darwin-amd64"
         }
       ]
     }

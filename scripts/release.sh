@@ -55,6 +55,9 @@ jq_args=(
   --arg version "$VERSION"
   --arg commit "$COMMIT"
   --arg pubkey "$(cat "$PUB_KEY_FILE")"
+  --arg archiver_base_url "$ARCHIVER_BASE_URL"
+  --arg archiver_owner "$ARCHIVER_OWNER"
+  --arg archiver_repo "$ARCHIVER_REPO"
 )
 
 for target in "${!DIGESTS[@]}"; do

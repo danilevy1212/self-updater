@@ -18,4 +18,5 @@ type Artifact struct {
 	Filename        string `json:"filename"`
 	Digest          string `json:"digest"`
 	SignatureBase64 string `json:"signatureBase64"`
+	URL             string `json:"url"`
 }

@@ -25,5 +25,6 @@ func TestJsonParse(t *testing.T) {
 		assert.NotEmpty(t, artifact.Filename, "should have the filename")
 		assert.NotEmpty(t, artifact.Digest, "should contain the digest")
 		assert.NotEmpty(t, artifact.SignatureBase64, "should contain the base64 signature of the binary")
+		assert.NotEmpty(t, artifact.URL, "should have a URL for the artifact")
 	}
 }
