@@ -10,9 +10,9 @@ import (
 	"fmt"
 )
 
-type VerifySignatureFunc func(publicKey, message, signature []byte) (bool, error)
+type VerifySignatureFunc func(publicKey []byte, messageHex, signature string) (bool, error)
 
-func verifyED22519Signature(publicKey, message, signature []byte) (bool, error) {
+func verifyED22519Signature(publicKey []byte, messageHex, signature string) (bool, error) {
 	if len(publicKey) == 0 {
 		return false, errors.New("public key is empty")
 	}
@@ -31,12 +31,12 @@ func verifyED22519Signature(publicKey, message, signature []byte) (bool, error) 
 		return false, fmt.Errorf("failed to parse public key: %w", err)
 	}
 
-	rawSignature, err := base64.StdEncoding.DecodeString(string(signature))
+	rawSignature, err := base64.StdEncoding.DecodeString(signature)
 	if err != nil {
 		return false, fmt.Errorf("failed to decode base64 signature: %w", err)
 	}
 
-	messageBytes, err := hex.DecodeString(string(message))
+	messageBytes, err := hex.DecodeString(messageHex)
 	if err != nil {
 		return false, fmt.Errorf("failed to decode hex digest: %w", err)
 	}
@@ -49,4 +49,4 @@ func verifyED22519Signature(publicKey, message, signature []byte) (bool, error) 
 	}
 }
 
-var DefaultVerifySignatureFunc VerifySignatureFunc = verifyED22519Signature
+var VerifySignature VerifySignatureFunc = verifyED22519Signature

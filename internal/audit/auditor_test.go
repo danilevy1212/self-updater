@@ -10,8 +10,8 @@ import (
 
 func Test_verifyED22519Signature(t *testing.T) {
 	var publicKey = []byte(releaseFixture.PublicKey)
-	var signature = []byte("mOnBz0kNnFWZfe/YyGND9y2C/2J0Z0sI8Y59HSTMP1tyagH+qrF6PzRLc1uKSn+Ks0DmPExYt1/FboiyT2r0DA==")
-	var message = []byte("fad0f6e8b138bcf83c041db9ea83427c37f7cafc1efa7528860c68ded97770d1")
+	var signature = "mOnBz0kNnFWZfe/YyGND9y2C/2J0Z0sI8Y59HSTMP1tyagH+qrF6PzRLc1uKSn+Ks0DmPExYt1/FboiyT2r0DA=="
+	var message = "fad0f6e8b138bcf83c041db9ea83427c37f7cafc1efa7528860c68ded97770d1"
 
 	t.Run("should return error if public key is empty", func(t *testing.T) {
 		_, err := verifyED22519Signature([]byte{}, message, signature)
@@ -20,7 +20,7 @@ func Test_verifyED22519Signature(t *testing.T) {
 	})
 
 	t.Run("should return error if signature is empty", func(t *testing.T) {
-		_, err := verifyED22519Signature(publicKey, message, []byte{})
+		_, err := verifyED22519Signature(publicKey, message, "")
 		assert.Error(t, err)
 		assert.Equal(t, "signature is empty", err.Error())
 	})
@@ -48,13 +48,13 @@ aGVsbG8gd29ybGQgdGhpcyBpcyBub3QgYSB2YWxpZCBwdWJsaWMga2V5
 	})
 
 	t.Run("should error if signature is not base64 encoded", func(t *testing.T) {
-		_, err := verifyED22519Signature(publicKey, message, []byte("invalidBase64Signature"))
+		_, err := verifyED22519Signature(publicKey, message, "invalidBase64Signature")
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "failed to decode base64 signature")
 	})
 
 	t.Run("should error if message is not hex encoded", func(t *testing.T) {
-		_, err := verifyED22519Signature(publicKey, []byte("invalidHexMessage"), signature)
+		_, err := verifyED22519Signature(publicKey, "invalidHexMessage", signature)
 		assert.Error(t, err)
 		assert.Contains(t, err.Error(), "failed to decode hex digest")
 	})
