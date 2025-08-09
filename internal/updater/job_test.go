@@ -27,7 +27,7 @@ func (ef *ErrorFetcher) FetchManifest(ctx context.Context) (*models.ReleaseManif
 
 func Test_Updater_Run(t *testing.T) {
 	t.Run("should return if application public key doesn't match manifests", func(t *testing.T) {
-		up, _ := New(context.Background(), models.ApplicationMeta{AuthorsPublicKey: []byte(`wrong`)}, func(newVersion *os.File) {
+		up, _ := New(context.Background(), models.ApplicationMeta{AuthorsPublicKey: []byte(`wrong`)}, func(newVersion *os.File, _ *Updater) {
 			assert.Fail(t, "should not call callback when public key doesn't match")
 		})
 
@@ -44,7 +44,7 @@ func Test_Updater_Run(t *testing.T) {
 		up, _ := New(context.Background(), models.ApplicationMeta{
 			AuthorsPublicKey: assets.PublicKeyPEM,
 			Version:          "v1.2.3",
-		}, func(newVersion *os.File) {
+		}, func(newVersion *os.File, _ *Updater) {
 			assert.Fail(t, "should not call callback when version matches latest from manifest")
 		})
 
@@ -69,7 +69,7 @@ func Test_Updater_Run(t *testing.T) {
 		up, _ := New(context.Background(), models.ApplicationMeta{
 			AuthorsPublicKey: assets.PublicKeyPEM,
 			Version:          "v1.2.2",
-		}, func(newVersion *os.File) {
+		}, func(newVersion *os.File, _ *Updater) {
 			assert.Fail(t, "should not call callback when manifest fetch fails")
 		})
 
@@ -94,7 +94,7 @@ func Test_Updater_Run(t *testing.T) {
 		up, _ := New(context.Background(), models.ApplicationMeta{
 			AuthorsPublicKey: assets.PublicKeyPEM,
 			Version:          "v1.2.2",
-		}, func(newVersion *os.File) {
+		}, func(newVersion *os.File, _ *Updater) {
 			assert.Fail(t, "should not call callback when manifest fetch fails")
 		})
 
@@ -123,7 +123,7 @@ func Test_Updater_Run(t *testing.T) {
 			Version:          "v1.2.2",
 			OS:               "linux",
 			Arch:             "amd64",
-		}, func(newVersion *os.File) {
+		}, func(newVersion *os.File, _ *Updater) {
 			assert.Fail(t, "should not call callback when artifact digest does not match")
 		})
 
@@ -166,7 +166,7 @@ func Test_Updater_Run(t *testing.T) {
 			Version:          "v1.2.2",
 			OS:               "linux",
 			Arch:             "amd64",
-		}, func(newVersion *os.File) {
+		}, func(newVersion *os.File, _ *Updater) {
 			assert.Fail(t, "should not call callback when artifact signature verification fails")
 		})
 
@@ -209,7 +209,7 @@ func Test_Updater_Run(t *testing.T) {
 			Version:          "v1.2.2",
 			OS:               "linux",
 			Arch:             "amd64",
-		}, func(newVersion *os.File) {
+		}, func(newVersion *os.File, _ *Updater) {
 			assert.NotNil(t, newVersion, "Callback should be called with new version file")
 			assert.Equal(t, fileName, newVersion.Name(), "Callback should receive the correct new version file")
 			assert.FileExists(t, fileName, "New version file should exist")

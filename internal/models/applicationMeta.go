@@ -21,6 +21,7 @@ type SourceInfo struct {
 }
 
 type ApplicationMeta struct {
+	ExecutablePath   string
 	Digest           []byte
 	Version          string
 	Commit           string
@@ -30,7 +31,7 @@ type ApplicationMeta struct {
 	SourceInfo       SourceInfo
 }
 
-func NewApplicationMeta(digest []byte, version, commit string) ApplicationMeta {
+func NewApplicationMeta(digest []byte, version, commit, exePath string) ApplicationMeta {
 	return ApplicationMeta{
 		Digest:           digest,
 		Version:          version,
@@ -38,6 +39,7 @@ func NewApplicationMeta(digest []byte, version, commit string) ApplicationMeta {
 		AuthorsPublicKey: assets.PublicKeyPEM,
 		OS:               runtime.GOOS,   // "linux", "windows" or "darwin"
 		Arch:             runtime.GOARCH, // "amd64" or "arm64"
+		ExecutablePath:   exePath,
 		SourceInfo: SourceInfo{
 			Name:  SourceName,
 			Owner: SourceOwner,

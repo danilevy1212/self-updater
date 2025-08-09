@@ -8,8 +8,9 @@ import (
 )
 
 type Config struct {
-	IsDev    bool   `env:"UPDATER_IS_DEV,default=false"`
-	Schedule string `env:"UPDATER_CRON_SCHEDULE,default=* * * * *"`
+	IsDev     bool   `env:"UPDATER_IS_DEV,default=false"`
+	Schedule  string `env:"UPDATER_CRON_SCHEDULE,default=* * * * *"`
+	RunAtBoot bool   `env:"UPDATER_RUN_AT_BOOT,default=true"`
 }
 
 type ConfigFunc func(context.Context) (*Config, error)

@@ -141,5 +141,5 @@ func (u *Updater) Run() {
 		return
 	}
 
-	u.OnUpgradeReady(artifactFile)
+	u.OnUpgradeReady(artifactFile, u)
 }
