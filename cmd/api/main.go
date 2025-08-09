@@ -41,7 +41,9 @@ func main() {
 
 	fmt.Printf("Current executable sha256: %s\n", am.DigestString())
 
-	updater, err := updater.New(ctx, am)
+	updater, err := updater.New(ctx, am, func(newVersion *os.File) {
+		// TODO  Swapping happens here
+	})
 	if err != nil {
 		fmt.Println("Error creating updater:", err)
 		return

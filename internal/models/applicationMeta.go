@@ -41,6 +41,7 @@ func NewApplicationMeta(digest []byte, version, commit string) ApplicationMeta {
 		SourceInfo: SourceInfo{
 			Name:  SourceName,
 			Owner: SourceOwner,
+			Host:  Host,
 		},
 	}
 }

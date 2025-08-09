@@ -3,23 +3,29 @@ package updater
 import (
 	"context"
 	"fmt"
+	"os"
 
 	"github.com/robfig/cron/v3"
 	"github.com/rs/zerolog"
 
 	"github.com/danilevy1212/self-updater/internal/logger"
+	"github.com/danilevy1212/self-updater/internal/manifest"
 	"github.com/danilevy1212/self-updater/internal/models"
 	"github.com/danilevy1212/self-updater/internal/updater/config"
 )
 
-type Updater struct {
-	Meta   models.ApplicationMeta
-	Cron   *cron.Cron
-	Config *config.Config
-	Logger *zerolog.Logger
-}
+type OnUpgradeReadyFunc func(newVersion *os.File)
 
 type JobID int
+
+type Updater struct {
+	Meta            models.ApplicationMeta
+	Cron            *cron.Cron
+	Config          *config.Config
+	Logger          *zerolog.Logger
+	ManifestFetcher manifest.ManifestFetcher
+	OnUpgradeReady  OnUpgradeReadyFunc
+}
 
 func (u *Updater) Start() (JobID, error) {
 	u.Logger.Info().
@@ -43,7 +49,7 @@ func (u *Updater) Start() (JobID, error) {
 	return JobID(id), nil
 }
 
-func New(ctx context.Context, am models.ApplicationMeta) (*Updater, error) {
+func New(ctx context.Context, am models.ApplicationMeta, onUpgradeReadyCallback OnUpgradeReadyFunc) (*Updater, error) {
 	conf, err := config.New(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("failed to load config: %w", err)
@@ -55,11 +61,19 @@ func New(ctx context.Context, am models.ApplicationMeta) (*Updater, error) {
 		With().
 		Str("app", "updater").
 		Logger()
+	mfl := l.With().Str("service", "manifest_fetcher").Logger()
+
+	mf, err := ManifestFetcherFactory(ctx, am, &mfl)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create manifest fetcher: %w", err)
+	}
 
 	return &Updater{
-		Meta:   am,
-		Config: conf,
-		Cron:   cr,
-		Logger: &l,
+		Meta:            am,
+		Config:          conf,
+		Cron:            cr,
+		Logger:          &l,
+		ManifestFetcher: mf,
+		OnUpgradeReady:  onUpgradeReadyCallback,
 	}, nil
 }
