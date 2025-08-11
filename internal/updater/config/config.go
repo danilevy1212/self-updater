@@ -21,7 +21,6 @@ func New(ctx context.Context) (*Config, error) {
 	return ConfigFetcher(ctx)
 }
 
-// TODO  Unit test this shit
 func fetchFromEnvironment(ctx context.Context) (*Config, error) {
 	var cfg Config
 	if err := envconfig.Process(ctx, &cfg); err != nil {

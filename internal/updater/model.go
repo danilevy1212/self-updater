@@ -14,7 +14,7 @@ import (
 	"github.com/danilevy1212/self-updater/internal/updater/config"
 )
 
-type OnUpgradeReadyFunc func(newVersion *os.File, updater *Updater)
+type OnUpgradeReadyFunc func(newVersion *os.File)
 
 type JobID int
 

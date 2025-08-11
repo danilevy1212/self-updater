@@ -3,13 +3,15 @@ package config
 import (
 	"context"
 	"fmt"
+	"os"
+	"path/filepath"
 
 	"github.com/sethvargo/go-envconfig"
 )
 
 type Config struct {
-	IsDev bool `env:"SERVER_IS_DEV,default=false"`
-	Port  uint `env:"SERVER_PORT,default=3000"`
+	IsDev            bool   `env:"LAUNCHER_IS_DEV,default=false"`
+	SessionDirectory string `env:"LAUNCHER_SESSION_FOLDER,default=self-updater"`
 }
 
 type ConfigFunc func(context.Context) (*Config, error)
@@ -25,5 +27,8 @@ func fetchFromEnvironment(ctx context.Context) (*Config, error) {
 	if err := envconfig.Process(ctx, &cfg); err != nil {
 		return nil, fmt.Errorf("error loading config: %w", err)
 	}
+
+	cfg.SessionDirectory = filepath.Join(os.TempDir(), cfg.SessionDirectory)
+
 	return &cfg, nil
 }

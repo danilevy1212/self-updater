@@ -9,6 +9,8 @@
 *.dylib
 bin/*
 internal/assets/private.pem
+internal/assets/release.json
+internal/assets/release.json.sig.base64
 
 # Test binary, built with `go test -c`
 *.test
