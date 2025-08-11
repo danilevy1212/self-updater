@@ -8,6 +8,8 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/rs/zerolog"
+
 	"github.com/danilevy1212/self-updater/internal/models"
 	"github.com/danilevy1212/self-updater/internal/models/exitcodes"
 	"github.com/danilevy1212/self-updater/internal/server"
@@ -29,16 +31,31 @@ func runServer(ctx context.Context, am models.ApplicationMeta) int {
 	var exitCode atomic.Int32
 	exitCode.Store(int32(exitcodes.ExitOK))
 
-	updater, err := updater.New(ctx, am, func(newVersion *os.File) {
+	updater, err := updater.New(ctx, am, func(newVersion *os.File, logger *zerolog.Logger) {
 		defer newVersion.Close()
 		newPath := filepath.Join(*sessionDirectory, getNewServerFileName(am))
 
+		logger.Info().
+			Str("new_version_path", newPath).
+			Msg("New version ready to be applied")
+
 		if err := os.Rename(newVersion.Name(), newPath); err != nil {
-			fmt.Println("rename new version:", err)
+			logger.Error().
+				Err(err).
+				Str("new_version_path", newPath).
+				Msg("Failed to rename new version file")
+
 			exitCode.Store(int32(exitcodes.ExitFatal))
 		} else {
+			logger.Info().
+				Str("new_version_path", newPath).
+				Msg("New version file renamed successfully")
+
 			exitCode.Store(int32(exitcodes.ExitUpdateReady))
 		}
+
+		logger.Info().
+			Msg("Shutting down server after update")
 
 		c, cancel := context.WithTimeout(ctx, 10*time.Second)
 		defer cancel()

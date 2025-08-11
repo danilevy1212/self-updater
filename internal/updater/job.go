@@ -141,5 +141,10 @@ func (u *Updater) Run() {
 		return
 	}
 
-	u.OnUpgradeReady(artifactFile)
+	l := u.Logger.With().
+		Str("handler", "OnUpgradeReady").
+		Str("artifact_file", artifactFile.Name()).
+		Logger()
+
+	u.OnUpgradeReady(artifactFile, &l)
 }
