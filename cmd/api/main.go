@@ -13,8 +13,8 @@ import (
 var (
 	Version          string = "development"
 	Commit           string = "unknown"
-	asServer                = flag.Bool("server", false, "run server + updater process directly")
 	sessionDirectory        = flag.String("current-session-dir", "", "directory to store session files")
+	asServer                = flag.Bool("server", false, "run server + updater process directly")
 )
 
 func main() {
